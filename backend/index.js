@@ -6,11 +6,17 @@ import express from 'express'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import cors from 'cors'
+
 import bookRoute from './route/book.route.js'
+import userRoute from './route/user.route.js'
+
 const app = express()
 app.use(cors())
+// Middleware to parse JSON bodies
+app.use(express.json());
 
 dotenv.config();
+
 const PORT = process.env.PORT || 4000;
 const MongoURI=process.env.MONGO_URI;
 
@@ -20,8 +26,7 @@ if (!MongoURI) {
     process.exit(1); // Exit the process with a failure code
   }
 
-// Middleware to parse JSON bodies
-app.use(express.json());
+
 
 // Function to connect to MongoDB
 async function connectToMongoDB() {
@@ -39,7 +44,7 @@ async function connectToMongoDB() {
 
 // defining the routes
 app.use('/book',bookRoute);
-
+app.use('/user',userRoute);
 
 
 
